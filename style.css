@@ -1,0 +1,221 @@
+*{
+	margin: 0 auto;
+	padding: 0;
+	font-family: Montserrat;
+}
+.wrapper{
+	width: 90%;
+	padding: 15px;
+	position: relative;
+	display: block;
+}
+.view_cards_block{
+	width: 100%;
+	height: auto;
+	border-bottom: 2px solid #bdbdbd;
+	padding: 10px 0 10px 0;
+}
+.view_cards_block p{
+	display: inline-block;
+}
+.button_submit_block{
+	width: 100%;
+	height: auto;
+	padding: 10px 0 15px 0;
+}
+input[type="text"]{
+	padding: 8px 8px 8px 12px;
+	border-radius: 5px;
+	border: 1px solid #c2c2c2;
+    outline-color: #61c5ff;
+}
+input[type="checkbox"]{
+	transform: scale(1.5);
+	margin-left: 5px;
+}
+input[type="number"]{
+	width: auto;
+	max-width: 40px;
+	padding: 8px 8px 8px 12px;
+	border-radius: 5px;
+	border: 1px solid #c2c2c2;
+    outline-color: #61c5ff;
+}
+input[type="submit"]{
+	padding: 10px 25px;
+	display: inline-block;
+	background: #29d682;
+	border-radius: 5px;
+	color: white;
+	text-transform: uppercase;
+	font-weight: 500;
+	border: none;
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+	transition: 0.2s;
+}
+input[type="submit"]:hover{
+	transform: translateY(-5px)
+}
+.view_cards_block_result{
+	width: auto;
+	overflow-y: auto;
+	display: inline-block;
+	max-height: 400px;
+}
+.result_line_block{
+	width: 100%;
+	display: block;
+}
+.result_line_block:nth-child(2n) div{
+	background: #f5f5f5;
+}
+.result_line{
+	display: inline-block;
+	width: auto;
+	padding: 10px 15px 10px 15px;
+}
+h2{
+	padding-bottom: 15px;
+}
+.del_or_add_card_wrapper{
+	width: 100%;
+	height: auto;
+	display: grid;
+	grid-template-columns: 50% 50%;
+	position: relative;
+	border-bottom: 2px solid #bdbdbd;
+	padding: 10px 0 10px 0;
+}
+.del_or_add_card_wrapper p{
+	display: inline-block;
+}
+.del{
+	width: 100%;
+}
+.add{
+	width: 100%;
+}
+.number_card{
+	padding: 10px 0 10px;
+}
+.all_cards{
+	padding: 10px 0 10px ;
+}
+.input_del_add_wrapper{
+	padding: 5px 0 10px 0;
+}
+.input_del_add_wrapper p{
+	padding: 5px 0 5px 0;
+}
+.textarea_wrapper{
+	width: 100%;
+	display: block;
+	padding-bottom: 5px;
+}
+textarea{
+	padding: 5px;
+	display: inline-block;
+	width: 60%;
+	max-width: 60%;
+	max-height: 300px;
+	min-height: 100px;
+	border-radius: 5px;
+}
+#only_cards{
+	opacity: 0;
+}
+.custom-checkbox+label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+.custom-checkbox+label::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #adb5bd;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+.custom-checkbox:checked+label::before {
+  border-color: #61c5ff;
+  background-color: #61c5ff;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+@media screen and (max-device-width: 600px){
+	h2{
+		font-size: 2.4em;
+		padding-top: 25px;
+	}
+	.view_cards_block{
+		padding-bottom: 40px;
+	}
+	.view_cards_block p{
+		font-size: 1.8em;
+		display: block;
+		width: 100%;
+		padding: 15px 0 10px 0;
+	}
+	input[type="text"]{
+		display: block;
+		width: 98%;
+		text-transform: left;
+		padding: 25px 0px 25px 10px;
+		padding-right: 0;
+		margin-top: 10px;
+		font-size: 1.4em;
+	}
+	input::placeholder{
+		font-size: 1em;
+	}
+	.view_cards_block_result{
+		width: 100%;
+
+	}
+	.result_line{
+		width: 100%;
+		font-size: 1.7em;
+	}
+	input[type="submit"]{
+		font-size: 1.8em;
+	}
+	input[type="number"]{
+		font-size: 1.3em;
+	}
+	.del_or_add_card_wrapper{
+		grid-template-columns: 100%;
+	}
+	.input_del_add_wrapper p{
+		width: 100%;
+	}
+	.input_del_add_wrapper p{
+		font-size: 1.8em;
+		display: block;
+		width: 100%;
+		padding: 15px 0 10px 0;
+	}
+	.number_card{
+		font-size: 1.8em;
+	}
+	textarea{
+		width: 98%;
+		max-width: 98%;
+		height: 400px;
+	}
+	.del_or_add_card_wrapper{
+		padding-bottom: 200px;
+	}
+	input[type="submit"]{
+		padding: 25px 40px;
+	}
+	.custom-checkbox+label::before{
+		width: 2em;
+    	height: 2em;
+	}
+}
