@@ -23,88 +23,7 @@
 					<input type="submit" name="show" value="Посмотреть карты" style="background:#61c5ff"><br>
 				</div>
 				<div class="view_cards_block_result">
-				<?php 
-					if(isset($_POST["show"])) {
-					    
-					
-					$url = "https://edge.qiwi.com/cards/v1/cards?vas-alias=qvc-master";
 
-					$ch = curl_init($url);
-
-					curl_setopt($ch, CURLOPT_URL, $url);
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($ch, CURLOPT_HTTPHEADER, [
-						'Accept: application/json',
-						'Content-Type: application/json',
-						'Authorization: Bearer '.$_POST["token"]
-					]);
-
-					$result = curl_exec($ch);
-					$result_array = json_decode($result);
-					
-					
-					if (empty($result)) {
-					    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-				        responseChecker($http_code);
-				        curl_close($ch); 
-				    } 
-				    else {
-				        foreach($result_array as $cards) {
-						
-				    		if($cards->qvx->status == "ACTIVE") {
-				    			
-				    			$url = "https://edge.qiwi.com/cards/v1/cards/".$cards->qvx->id."/details";
-				    
-				    			$ch = curl_init($url);
-				    
-				    			$data = json_encode(["operationId" => gen_uuid()]);
-				    
-				    			curl_setopt($ch, CURLOPT_URL, $url);
-				    			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-				    			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				    			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-				    			curl_setopt($ch, CURLOPT_HTTPHEADER, [
-				    				'Accept: application/json',
-				    				'Authorization: Bearer '.$_POST["token"],
-				    				'Content-Type: application/json',
-				    				'Content-Length: ' . strlen($data)
-				    			]);
-				    
-				    
-				    			$res = curl_exec($ch);
-				    			$res = json_decode($res);
-				    			$checkcard = 0;
-				    			curl_close($ch);
-				    			
-				    			if($res->errorCode == "auth.forbidden") {
-				        	        echo "Неверный токен. Попробуйте другой или смените его<br/>";
-				        	    }
-				    			else if (empty($res)) {
-				    			    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-				    			    responseChecker($http_code);
-				    			}
-				    			else {
-				    			    
-				    			    if(isset($_POST["only_cards"]) && $_POST["only_cards"] == "on") {
-				    			        echo $res->pan.", ";
-				    			    }
-				    			    else {
-				    			    	$checkcard = 1;
-				    			    	echo '<div class="result_line_block">';
-					    			    	echo '<div class="result_line">';
-						    			        echo $res->pan.";".$cards->qvx->cardExpireMonth."/".$cards->qvx->cardExpireYear.";".$res->cvv;
-						            			echo "<br/>".$cards->qvx->activated;
-					            			echo "</div>";
-				            			echo "</div>";
-				    			    }
-				    			    
-				    			}	
-				    		}
-				    	}
-				    }
-				}
-
-				?>
 				</div>
 			</form>
 		</div>
@@ -204,6 +123,83 @@ function responseChecker($error) {
     
 }
 
+if(isset($_POST["show"])) {
+
+	$url = "https://edge.qiwi.com/cards/v1/cards?vas-alias=qvc-master";
+	
+	$ch = curl_init($url);
+	
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, [
+		'Accept: application/json',
+		'Content-Type: application/json',
+		'Authorization: Bearer '.$_POST["token"]
+	]);
+	
+	$result = curl_exec($ch);
+	$result_array = json_decode($result);
+	
+	
+	if (empty($result)) {
+	    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	responseChecker($http_code);
+	curl_close($ch); 
+	} 
+	else {
+	foreach($result_array as $cards) {
+		
+		if($cards->qvx->status == "ACTIVE") {
+			
+			$url = "https://edge.qiwi.com/cards/v1/cards/".$cards->qvx->id."/details";
+	
+			$ch = curl_init($url);
+	
+			$data = json_encode(["operationId" => gen_uuid()]);
+	
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, [
+				'Accept: application/json',
+				'Authorization: Bearer '.$_POST["token"],
+				'Content-Type: application/json',
+				'Content-Length: ' . strlen($data)
+			]);
+	
+			$res = curl_exec($ch);
+			$res = json_decode($res);
+			$checkcard = 0;
+			curl_close($ch);
+			
+			if($res->errorCode == "auth.forbidden") {
+			echo "Неверный токен. Попробуйте другой или смените его<br/>";
+		    }
+			else if (empty($res)) {
+			    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			    responseChecker($http_code);
+			}
+			else {
+			    
+			    if(isset($_POST["only_cards"]) && $_POST["only_cards"] == "on") {
+				echo $res->pan.", ";
+			    }
+			    else {
+				$checkcard = 1;
+				echo '<div class="result_line_block">';
+					echo '<div class="result_line">';
+						echo $res->pan.";".$cards->qvx->cardExpireMonth."/".$cards->qvx->cardExpireYear.";".$res->cvv;
+						echo "<br/>".$cards->qvx->activated;
+					echo "</div>";
+				echo "</div>";
+			    }
+			    
+			}	
+		}
+	}
+	}
+	}
 
 
 if(isset($_POST["block_all"])) {
@@ -636,8 +632,6 @@ if(isset($_POST["create"])) {
 if(isset($_POST["create2"])) {
 	createCards($_POST["phonenumber"], $_POST["token"], $_POST["number"], "qvc-cpa-debit", 99);
 }
-
-
 
 ?>
 </body>
